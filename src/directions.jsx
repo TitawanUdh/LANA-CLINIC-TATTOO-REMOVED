@@ -1,0 +1,67 @@
+import React from "react";
+import { FaFacebook, FaInstagram, FaLine, FaTiktok } from "react-icons/fa";
+import { FaLocationPin } from "react-icons/fa6";
+
+const links = [
+  
+  {
+    num: 1,
+    title: "Instagram",
+    link: "https://www.instagram.com/tattooremoval.lanaclinic?igsh=MXFiY3J2ejIyNXNmaQ%3D%3D&utm_source=qr",
+    icon: <FaInstagram />,
+  },
+  {
+    num: 2,
+    title: "Facebook",
+    link: "https://www.facebook.com/share/17WzeGNqaj/?mibextid=wwXIfr",
+    icon: <FaFacebook />,
+  },
+  {
+    num: 3,
+    title: "Tiktok",
+    link: "https://www.tiktok.com/@lanatattooremoval?_r=1&_t=ZS-91uMSjkzejg",
+    icon: <FaTiktok />,
+  },
+  {
+    num: 4,
+    title: "Location",
+    link: "https://share.google/JUAwMn3wuhsxtUwV4",
+    icon: <FaLocationPin/>,
+  },
+];
+
+export default function Directions() {
+  const open = (href) =>
+    href && window.open(href, "_blank", "noopener,noreferrer");
+
+  return (
+    // เอา class ของ Bootstrap ที่บังคับ flex ออก ให้เรา control เองด้วย CSS
+    <div className="link-list mt-4">
+      {links.map((it) => {
+        const disabled = !it.link;
+        return (
+          <div
+            key={it.num}
+            className={`link-card ${disabled ? "is-disabled" : ""}`}
+            role="button"
+            tabIndex={0}
+            aria-disabled={disabled}
+            onClick={() => !disabled && open(it.link)}
+            onKeyDown={(e) => {
+              if (!disabled && (e.key === "Enter" || e.key === " ")) {
+                e.preventDefault();
+                open(it.link);
+              }
+            }}
+          >
+            <span className="chip">{it.num}</span>
+            <div className="link-title">{it.title}</div>
+            <span className="icon-wrap" aria-hidden="true">
+              {it.icon}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
